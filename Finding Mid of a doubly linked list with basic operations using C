@@ -1,0 +1,196 @@
+// Find the mid of a Doubly Linked List
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+
+struct node *start=NULL;
+
+ void insertion_begining()
+  {
+    int item;
+    struct node *new;
+    new=(struct node *)malloc(sizeof(struct node));
+    if(new==NULL)
+    printf("Overflow\n");
+    else
+     {
+         printf("Enter the item to insert\n");
+         scanf("%d",&item);
+         
+         new->data=item;
+         new->left=NULL;
+         new->right=start;
+         if(start!=NULL)
+         start->left=new;
+         start=new;
+     }
+  }
+
+
+void insertion_last()
+{
+    struct node *new;
+    struct node *temp;
+    int item;
+    new=(struct node *)malloc(sizeof(struct node));
+    if(new==NULL)
+    printf("Overflow\n");
+    else
+    {
+    printf("Enter the item to insert\n");
+    scanf("%d",&item);
+            new->data=item;
+        if(start==NULL)
+        {
+            new->left=NULL;
+            new->right=NULL;
+            start=new;
+        }
+        else
+        {
+            temp=start;
+            while(temp->right!=NULL)
+            {
+                temp=temp->right;
+            }
+           new->right=NULL;
+           new->left=temp;
+           temp->right=new;
+        }
+    }
+   }
+    
+  void deletion_begining()
+  {
+      int x;
+      struct node *temp;
+      if(start==NULL)
+      printf("Linked list is empty\n");
+      else
+      {
+          temp=start;
+          start=start->right;
+          x=temp->data;
+          temp->right=NULL;
+          free(temp);
+      }
+      printf("%d is deleted\n",x);
+  }
+    
+ void deletion_last()
+ {
+     int x;
+     struct node *temp;
+     struct node *temp1;
+     temp=start;
+     while(temp->right!=NULL)
+     {
+         temp1 =temp;
+         temp=temp->right;
+     }
+     temp1->right=NULL;
+     x=temp->data;
+     temp->left=NULL;
+     printf("%d is deleted\n",x);
+     free(temp);
+ }
+    
+ void display()
+ {
+     struct node *temp;
+     temp=start;
+     if(temp==NULL)
+     printf("The linked list is empty\n");
+     else
+     {
+     printf("The element is:\n");
+     while(temp!=NULL)
+     {
+         printf("%d\t",temp->data);
+         temp=temp->right;
+     }
+     }
+ }
+    
+ void FindMid(int n)
+{
+    int i,j=0;
+    int A[2];
+    struct node *temp;
+    temp=start;
+    if(n==0)
+    printf("Linked list is empty\n");
+    else if(n==1)
+     printf("The mid is: %d\n",temp->data);
+    else if(n%2==0)
+    {
+        for(i=0;i<(n/2)+1;i++)
+        {
+            if(i==(n/2)-1||i==n/2)
+            {
+              A[j]=temp->data;
+              j++;
+            }
+            temp=temp->right;
+        }
+        printf("The mids are:\t");
+        for(j=0;j<2;j++)
+        printf("%d\t",A[j]);
+    }
+    else
+    {
+        for(i=0;i<=n/2;i++)
+        {
+        if(i==n/2)
+        printf("The mid is: %d\n",temp->data);
+        temp=temp->right;
+        }
+        
+    }
+    
+}   
+
+int main()
+{
+    int ch,j=0;
+    printf("Press 1 for insertion in begining\n");
+    printf("Press 2 for insertion in last\n");
+    printf("Press 3 for deletion in begining\n");
+    printf("Press 4 for deletion in last\n");
+    printf("Press 5 for display\n");
+    printf("Press 6 to find median\n");
+    while(1)
+    {
+        printf("\nEnter your choice :\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1: insertion_begining();
+                     j++;
+                     break;
+            case 2: insertion_last();
+                     j++;
+                     break;
+            case 3: deletion_begining();
+                     j--;
+                     break;
+            case 4: deletion_last();
+                     j--;
+                     break;
+            case 5: display();
+                     break;
+            case 6: FindMid(j);
+                    break;
+            default: printf("You have entered wrong choice\n");
+                      return 0;
+        }
+    }
+    return 0;
+}
